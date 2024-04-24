@@ -70,6 +70,7 @@ public class StudentDao extends Dao {
 		}
 		return student;
 	}
+
     private List<Student> postFilter(ResultSet rSet, School school) throws Exception {
 
 		//リストの初期化
@@ -94,6 +95,7 @@ public class StudentDao extends Dao {
 		}
 		return list;
 	}
+
 	public List<Student> filter(School school, int entYear, String classNum, boolean isAttend) throws Exception {
 		//リストを初期化
 		List<Student> list = new ArrayList<>();
