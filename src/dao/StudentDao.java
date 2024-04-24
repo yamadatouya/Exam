@@ -14,7 +14,9 @@ public class StudentDao extends Dao {
 
 	private String baseSql = "select * from student where school_cd=?";
 
-	public Student get(String no) throws Exception {
+	public Student get(String no) throws Exception
+//	テスト
+	{
 		//学生インスタンスを初期化
 		Student student = new Student();
 		//DBへのコネクショを確立
