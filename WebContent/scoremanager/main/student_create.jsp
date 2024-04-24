@@ -9,19 +9,38 @@
             <h2>学生情報登録</h2>
 
             <form action="StudentCreateExecute.action" method="post" class="form" onsubmit="return validateForm()">
-
+  					<div class="col-4">
+                        <label class="form-label" for="student-fl-select">入学年度</label>
+                        <select class="form-select" id="student-f1-select" name="f1">
+                            <option value="0">--------</option>
+                            <c:forEach var="year" items="${ent_year_set}">
+                                <option value="${year}" <c:if test="${year == f1}">selected</c:if>>${year}</option>
+                            </c:forEach>
+                        </select>
+                        <div class="text-warning">${errors.get("entYear")}</div>
+                    </div>
 
                 <div class="form-group">
-                    <label for="no">科目コード</label>
+                    <label for="no">学生番号</label>
                     <input type="text" id="no" name="no" class="form-control"
-                    placeholder="科目コードを入力してください">
+                    placeholder="学生番号を入力してください">
                 </div>
 
                 <div class="form-group">
-                    <label for="student.name">科目名</label>
+                    <label for="student.name">氏名</label>
                     <input type="text" id="name" name="name" class="form-control"
-                     placeholder="科目名を入力してください">
+                     placeholder="氏名を入力してください">
                 </div>
+
+                <div class="col-4">
+                        <label class="form-label" for="student-f2-select">クラス</label>
+                        <select class="form-select " id="student-f2-select" name="f2">
+                            <option value="0">--------</option>
+                            <c:forEach var="num" items="${class_num_set}">
+                                <option value="${num}" <c:if test="${num == f2}">selected</c:if>>${num}</option>
+                            </c:forEach>
+                        </select>
+                    </div>
 
 
                 <button type="submit" class="btn btn-primary">登録</button>
