@@ -7,32 +7,29 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import bean.School;
 import bean.Student;
-import bean.Subject;
 
-public class TestListSubject extends Dao {
+public class TestListStudentDao extends Dao {
 
 	private String baseSql = "select * from student where school_cd=?";
 
 
-	private List<TestListSubject> postFilter(ResultSet rSet) throws Exception {
+	private List<TestListStudent> postFilter(ResultSet rSet) throws Exception {
 
 		//リストの初期化
-		List<Student> list = new ArrayList<>();
+		List<TestListStudent> list = new ArrayList<>();
 		//リザルトセットを全権走査
 		try {
 			while (rSet.next()) {
 				//学生インスタンスを初期化
-				TestListSubject testlistsubject = new TestListSubject();
+				TestListStudent testliststudent = new TestListStudent();
 				//学生インスタンスに検索結果をセット
-				TestListSubject.setEntYear(rSet.getInt("ent_year"));
-				TestListSubject.setNo(rSet.getString("no"));
-				TestListSubject.setName(rSet.getString("name"));
-				TestListSubject.setNum(rSet.getString("num"));
-				TestListSubject.setPoint(rSet.<integer,integer>)
+				TestListSubject.setSubjectName(rSet.getStriing("subject_name"));
+				TestListSubject.setSubjectcd(rSet.getString("suubject_cd"));
+				TestListSubject.setNum(rSet.getInt("num"));
+				TestListSubject.setPoint(rSet.getInt("point"));
 				//リストに追加
-				list.add(testlistsubject);
+				list.add(testliststudent);
 			}
 		} catch (SQLException | NullPointerException e) {
 			e.printStackTrace();
@@ -40,9 +37,9 @@ public class TestListSubject extends Dao {
 		return list;
 	}
 
-	public List<TestListSubject> filter(int entYear,String classNum,Subject subject,School school) throws Exception {
+	public List<TestListStudent> filter(Student student) throws Exception {
 		//リストを初期化
-		List<Student> list = new ArrayList<>();
+		List<TestListStudentDao> list = new ArrayList<>();
 		//コネクションを確立
 		Connection connection = getConnection();
 		//プリペアステートメント
@@ -59,16 +56,11 @@ public class TestListSubject extends Dao {
 		try {
 			//プリペアーステートメントにSQL文をセット
 			statement = connection.prepareStatement(baseSql + condition + conditionIsAttend + order);
-			//プリペアーステートメントに学校コードをバインド
-			statement.setString(1, school.getCd());
-			//プリペアーステートメントに入学年度をバインド
-			statement.setInt(2, entYear);
-			//プリペアーステートメントにクラス番号をバインド
-			statement.setString(3, classNum);
+			statement.setString(1, student);
 			//プライベートステートメントを実行
 			rSet = statement.executeQuery();
 			//リストへの格納処理を実行
-			list = postFilter(rSet, school);
+			list = postFilter(rSet, testliststudent);
 		} catch (Exception e) {
 			throw e;
 		} finally {

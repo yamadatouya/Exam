@@ -14,7 +14,8 @@ public class StudentDao extends Dao {
 
 	private String baseSql = "select * from student where school_cd=?";
 
-	public Student get(String no) throws Exception {
+	public Student get(String no) throws Exception
+	{
 		//学生インスタンスを初期化
 		Student student = new Student();
 		//DBへのコネクショを確立
@@ -70,7 +71,6 @@ public class StudentDao extends Dao {
 		}
 		return student;
 	}
-
     private List<Student> postFilter(ResultSet rSet, School school) throws Exception {
 
 		//リストの初期化
@@ -95,7 +95,6 @@ public class StudentDao extends Dao {
 		}
 		return list;
 	}
-
 	public List<Student> filter(School school, int entYear, String classNum, boolean isAttend) throws Exception {
 		//リストを初期化
 		List<Student> list = new ArrayList<>();
@@ -240,65 +239,69 @@ public class StudentDao extends Dao {
 	}
 
 	public boolean save(Student student) throws Exception {
-	    // コネクションを確立
-	    Connection connection = getConnection();
-	    // プリペアーステートメント
-	    PreparedStatement statement = null;
-	    // 実行件数
-	    int count = 0;
+		//コネクションを確立
+		Connection connection = getConnection();
+		// プリペアーステートメント
+		PreparedStatement statement = null;
+		//実行件数
+		int count = 0;
 
-	    try {
-	        // DBから学生を取得
-	        Student old = get(student.getNo());
-	        if (old == null) {
-	            // 学生が存在しなかった場合
-	            // プリペアードステートメントにINSERT文をセット
-	            statement = connection.prepareStatement(
-	                    "insert into student(no, name, ent_year, class_num, is_attend, school_cd) values(?, ?, ?, ?, ?, ?)");
-	            // プリペアーどステートメントに値をバインド
-	            statement.setString(1, student.getNo());
-	            statement.setString(2, student.getName());
-	            statement.setInt(3,  student.getEntYear());
-	            statement.setString(4, student.getClassNum());
-	            statement.setBoolean(5, student.isAttend());
-	            statement.setString(6,  student.getSchool().getCd());
-	        } else {
-	            // 学生が存在する場合
-	            // プリペアードステートメントにUPDATE文をセット
-	            statement = connection.prepareStatement(
-	                    "update student set name=?, ent_year=?, class_num=?, is_attend=? where no=?");
-	            // プリペアードステートメントに値をバインド
-	            statement.setString(1, student.getName());
-	            statement.setInt(2,  student.getEntYear());
-	            statement.setString(3, student.getClassNum());
-	            statement.setBoolean(4, student.isAttend());
-	            statement.setString(5, student.getNo());
-	        }
+		try {
+			//DBから学生を取得
+			Student old = get(student.getNo());
+			if (old == null) {
+				//学生が存在しなかった場合
+				//プリペアードステートメントにINSERT文をセット
+				statement = connection.prepareStatement(
+						"insert into student(no, name, ent_year, class_num, is_attend, school_cd) values(?, ?, ?, ?, ?, ?)");
+				//プリペアーどステートメントに値をバインド
+				statement.setString(1, student.getNo());
+				statement.setString(2, student.getName());
+				statement.setInt(3,  student.getEntYear());
+				statement.setString(4, student.getClassNum());
+				statement.setBoolean(5, student.isAttend());
+				statement.setString(6,  student.getSchool().getCd());
+			} else{
+				//学生が存在しなかった場合
+				//プリペアードステートメントにINSERT文をセット
+				statement = connection.prepareStatement(
+						"update student set name=?, ent_year=?, class_num=?, is_attend=? where no=?");
+				//プリペアードステートメントに値をバインド
+				statement.setString(1, student.getName());
+				statement.setInt(2,  student.getEntYear());
+				statement.setString(3, student.getClassNum());
+				statement.setBoolean(4, student.isAttend());
+				statement.setString(5, student.getNo());
+			}
 
-	        // プリペアードステートメントを実行
-	        count = statement.executeUpdate();
+			//プリペアードステートメントを実行
+			count = statement.executeUpdate();
 
-	    } catch (Exception e) {
-	        throw e;
+		} catch (Exception e) {
+			throw e;
 	    } finally {
-	        // 閉じる
-	        if (statement != null) {
-	            try {
-	                statement.close();
-	            } catch (SQLException sqle) {
-	                throw sqle;
-	            }
-	        }
-	        // コネクションを閉じる
-	        if (connection != null) {
-	            try {
-	                connection.close();
-	            } catch (SQLException sqle) {
-	                throw sqle;
-	            }
-	        }
-	    }
+	    	//閉じる
+		    if (statement != null) {
+		    	try {
+			    	statement.close();
+			    } catch (SQLException sqle) {
+			    	throw sqle;
+			    }
+		    }
+		    //コネクションを閉じる
+		    if (connection != null) {
+		    	try {
+		    		connection.close();
+		    	} catch (SQLException sqle) {
+		    		throw sqle;
+			    }
+		    }
+		}
 
-	    return count > 0;
-	}
+		if (count > 0) {
+			return true;
+		} else {
+			return false;
+		}
+    }
 }

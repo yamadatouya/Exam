@@ -9,72 +9,41 @@ import tool.Action;
 
 public class StudentUpdateExecuteAction extends Action {
 
-	@Override
-	public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
-		// ローカル変数の指定 1
+    @Override
+    public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
 
-				int ent_year = 0;
 
-				String no = "";
+        StudentDao studentDao = new StudentDao();
+        Student student = new Student();
+        boolean isAttend = false;
 
-				String name = "";
+        int ent_year = Integer.parseInt(req.getParameter("ent_year"));
+        String no = req.getParameter("no");
+        String name = req.getParameter("name");
+        String class_num = req.getParameter("class_num");
+        String isAttendStr = req.getParameter("is_Attend");
 
-				String class_num = "";
 
-				String isAttendStr = "";
+        if (isAttendStr != null) {
+			isAttend = true;
+		}
 
-				boolean isAttend = false;
 
-				Student student = new Student();
 
-				StudentDao studentDao = new StudentDao();
+        student.setNo(no);
+        student.setName(name);
+        student.setEntYear(ent_year);
+        student.setClassNum(class_num);
+        student.setAttend(isAttend);
+        //保存
+        studentDao.save(student);
 
-				// リクエストパラメーターの取得 2
 
-				ent_year = Integer.parseInt(req.getParameter("ent_year"));
 
-				no = req.getParameter("no");
 
-				name = req.getParameter("name");
-
-				class_num = req.getParameter("class_num");
-
-				isAttendStr = req.getParameter("si_attend");
-
-				// DBからデータ取得 3
-
-				// なし
-
-				// ビジネスロジック 4
-
-				if (isAttendStr != null) {
-
-					isAttend = true;
-
-				}
-
-				// studentに学生情報をセット
-
-				student.setNo(no);
-
-				student.setName(name);
-
-				student.setEntYear(ent_year);
-
-				student.setClassNum(class_num);
-
-				student.setAttend(isAttend);
-
-				// 変更内容を保存
-
-				studentDao.save(student);
-
-				// レスポンス値をセット 6
-
-				// なし
-
-				// JSPへフォワード 7
-
-				req.getRequestDispatcher("student_update_done.jsp").forward(req, res);
-	}
+        //変更に成功した場合、成功ページにフォワード
+        req.getRequestDispatcher("student_update_done.jsp").forward(req, res);
+        //保存に失敗した場合、学生リストページにフォワード
+        req.getRequestDispatcher("StudentList.action").forward(req, res);
+    }
 }

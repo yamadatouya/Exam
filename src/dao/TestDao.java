@@ -13,17 +13,17 @@ import bean.Subject;
 
 public class TestDao extends Dao {
 
-	private String baseSql = "select * from student where school_cd=?";
+	//STUDENT_NO  	SUBJECT_CD  	SCHOOL_CD  	NO  	POINT  	CLASS_NUM
+	private String baseSql = "select * from test where school_cd=?";
 
 	public Test get(Student student,Subject subject,School school,int no) throws Exception {
-		//学生インスタンスを初期化
 		Student student = new Student();
 		Test test = new Test();
 		School school = new School();
 		Subject subject = new Subject();
-		//DBへのコネクショを確立
+
+
 		Connection connection = getConnection();
-		//プリペアステートメント
 		PreparedStatement statement = null;
 
 		try {
@@ -106,7 +106,7 @@ public class TestDao extends Dao {
 
 	public List<Test> filter(int entYear,String classNum,Subject subject,int num,School school) throws Exception {
 		//リストを初期化
-		List<Student> list = new ArrayList<>();
+		List<Test> list = new ArrayList<>();
 		//コネクションを確立
 		Connection connection = getConnection();
 		//プリペアステートメント
@@ -126,10 +126,12 @@ public class TestDao extends Dao {
 			statement.setString(1, school.getCd());
 			statement.setString(2, classNum);
 			statement.setSubject(3, subject);
+			statement.setString(4, classNum);
+			statement.setString(5, classNum);
 			//プライベートステートメントを実行
 			rSet = statement.executeQuery();
 			//リストへの格納処理を実行
-			list = postFilter(rSet, school);
+			list = postFilter(rSet, test);
 		} catch (Exception e) {
 			throw e;
 		} finally {
@@ -144,7 +146,7 @@ public class TestDao extends Dao {
 		return list;
 	}
 
-	public boolean save(List<Test> list) throws Exception {
+	public boolean save(Test test) throws Exception {
 	    // コネクションを確立
 	    Connection connection = getConnection();
 	    // プリペアーステートメント
