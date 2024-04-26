@@ -1,90 +1,61 @@
-<%-- 科目管理一覧画面JSP --%>
-
-<%-- 学生一覧JSP --%>
+<%--科目画面一覧JSP--%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<c:import url="/common/base.jsp" >
+    pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<c:import url="/common/base.jsp">
 <c:param name="title">
 		得点管理システム
 </c:param>
-
-	<c:param name="scripts"></c:param>
+<c:param name="scripts"></c:param>
 
 	<c:param name="content">
-        <section class="me-4">
+
 			<h2 class="h3 mb-3 fw-norma bg-secondary bg-opacity-10 py-2 px-4">科目管理</h2>
+
 			<div class="my-2 text-end px-4">
-				<a href="StudentCreate.action">新規登録</a>
+			<a href="SubjectsCreate.action">新規登録</a>
 			</div>
-			<form method="get">
-				<div class="row border mx-3 mb-3 py-2 align-items-center rounded" id="filter">
-					<div class="col-4">
-						<label class="form-label" for="student-f1-select">科目コード</label>
-						<select class="form-select" id="student-f1-select" name="f1">
-							<option value="0">--------</option>
-							<c:forEach var="year" items="${ent_year_set }">
-								<%-- 現在のyearと選択されていたf1が一致していた場合selectedを追記 --%>
-								<option value="${year}" <c:if test="${year==f1}">selected</c:if>>${year}</option>
-							</c:forEach>
-						</select>
-					</div>
-					<div class="col-4">
-						<label class="form-label" for="student-f2-select">科目名</label>
-						<select class="form-select " id="student-f2-select" name="f2">
-							<option value="0">--------</option>
-							<c:forEach var="num" items="${class_num_set }">
+		<form method="get">
+		<div class="mt-2 text-warning">${errors.get("f1")}</div>
 
+		</form>
+		<c:choose>
+		<c:when test="${subjects.size()!=0}">
 
-								<%-- 現在のnumと選択されていたf2が一致していた場合selectedを追記 --%>
-								<option value="${num}" <c:if test="${num==f2}">selected</c:if>>${num}</option>
-							</c:forEach>
-						</select>
-					</div>
-					<div class="col-2 form-check text-center">
-						<label class="form-check-label" for="student-f3-check">在学中
-							<%-- パラメーターf3が存在している場合checkedを追記 --%>
-							<input class="form-check-input" type="checkbox"
-							id="student-f3-check" name="f3" value="t"
-							<c:if test="${!empty f3 }">checked</c:if> />
-						</label>
-					</div>
-					<div class="col-2 text-center">
-						<button class="btn btn-secondary" id="filter-button">絞込み</button>
-					</div>
-					<div class="mt-2 text-warning">${errors.get("f1") }</div>
-				</div>
-			</form>
-			<c:choose>
-				<c:when test="${students.size()>0}">
-					<div>検索結果：${students.size()}件</div>
-					<table class="table table-hover">
-						<tr>
-							<th>科目コード</th>
-							<th class="text-center">科目名</th>
+		<table class="table table-hover">
+		<tr>
+		<th>科目コード</th>
+		<th>科目名</th>
+		<th></th>
+		<th></th>
+		</tr>
+		<c:forEach var="subjects" items="${subjects}">
+		<tr>
+		<td>${subjects.code}</td>
+		<td>${subjects.name}</td>
 
-							<th></th>
-						</tr>
-						<c:forEach var="student" items="${students}">
-							<tr>
-								<%-- ここの部分がstudent～～～～～だから直さないといけない場所 --%>
-							    <td>${student.entYear}</td>
-								<td>${student.no}</td>
+		<td class="text-center">
 
-								<td class="text-center">
+		<td><a href="SubjectstUpdate.action?no=${subjects.no}">変更</a></td>
+		<td><a href="SubjectsDelete.action?no=${subjects.no}">削除</a></td>
+		</tr>
+		</c:forEach>
+		</table>
+		</c:when>
+		<c:otherwise>
+			<div>学生情報が存在しませんでした</div>
+		</c:otherwise>
+		</c:choose>
 
-								</td>
-								</td><a href="StudentUpdate.action?no=${student.no}">・変更する</a></td>
-								</td><a href="StudentDelete.action?no=${student.no}">・削除する</a></td>
-							</tr>
-						</c:forEach>
-					</table>
-				</c:when>
-				<c:otherwise>
-					<div>学生情報が存在しませんでした</div>
-				</c:otherwise>
-			</c:choose>
-		</section>
 	</c:param>
 </c:import>
 
+</body>
+</html>

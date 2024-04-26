@@ -1,4 +1,5 @@
-<%-- 科目登録完了画面JSP --%>
+<%-- 科目変更完了画面JSP --%>
+
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" %>
@@ -9,9 +10,14 @@
 </c:param>
 	<c:param name="scripts"></c:param>
 	<c:param name="content">
-	<h2 class="h3 mb-3 fw-normal bg-secondary bg-opacity-10 py-2 px-4">科目情報登録</h2>
+	        <div class="container">
+
+             <h2 class="h3 mb-3 fw-normal bg-secondary bg-opacity-10 py-2 px-4">科目情報変更</h2>
+            </div>
+
+
     <div class="alert alert-success text-center" role="alert">
-    <a>登録に成功しました</a>
+    <a>変更に成功しました</a>
        <p>${message}</p>
     </div>
 
@@ -40,12 +46,6 @@
 	</div>
 
 
-
-
-
-	<form action="menu.jsp" method="post">
-             <button type="submit" class="btn btn-secondary">戻る</button>
-    </form>
 
 
 
