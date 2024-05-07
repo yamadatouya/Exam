@@ -35,7 +35,7 @@ public class SubjectCreateExecuteAction extends Action {
 
         if (saved) {
             //変更に成功した場合、成功ページにフォワード
-            req.getRequestDispatcher("subjectt_update_done.jsp").forward(req, res);
+            req.getRequestDispatcher("subject_update_done.jsp").forward(req, res);
         } else {
             //保存に失敗した場合、学生リストページにフォワード
             req.getRequestDispatcher("SubjectList.action").forward(req, res);
