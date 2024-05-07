@@ -13,7 +13,7 @@ import bean.TestListSubject;
 
 public class TestListSubjectDao extends Dao {
 
-	private String baseSql = "select * from test where ?,?,?,?";
+	private String baseSql = "select * from test join subject on test.school_cd = subject.school_cd where ent_year=?, student_no=?,student_name=?,class_num=?";
 
 
 	private List<TestListSubject> postFilter(ResultSet rSet) throws Exception {

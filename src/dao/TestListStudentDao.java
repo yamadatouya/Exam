@@ -12,7 +12,7 @@ import bean.TestListStudent;
 
 public class TestListStudentDao extends Dao {
 
-	private String baseSql = "select * from test where student_cd=?";
+	private String baseSql = "select * from test join student on test.student_no = student.no where student_no=?";
 
 
 	private List<TestListStudent> postFilter(ResultSet rSet) throws Exception {
