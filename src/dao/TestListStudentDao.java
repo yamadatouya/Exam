@@ -8,10 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import bean.Student;
+import bean.TestListStudent;
 
 public class TestListStudentDao extends Dao {
 
-	private String baseSql = "select * from student where school_cd=?";
+	private String baseSql = "select * from test where student_cd=?";
 
 
 	private List<TestListStudent> postFilter(ResultSet rSet) throws Exception {
@@ -24,10 +25,10 @@ public class TestListStudentDao extends Dao {
 				//学生インスタンスを初期化
 				TestListStudent testliststudent = new TestListStudent();
 				//学生インスタンスに検索結果をセット
-				TestListSubject.setSubjectName(rSet.getStriing("subject_name"));
-				TestListSubject.setSubjectcd(rSet.getString("suubject_cd"));
-				TestListSubject.setNum(rSet.getInt("num"));
-				TestListSubject.setPoint(rSet.getInt("point"));
+				testliststudent.setSubjectName(rSet.getString("subjectName"));
+				testliststudent.setSubjectCd(rSet.getString("suubjectCd"));
+				testliststudent.setNum(rSet.getInt("num"));
+				testliststudent.setPoint(rSet.getInt("point"));
 				//リストに追加
 				list.add(testliststudent);
 			}
@@ -39,7 +40,7 @@ public class TestListStudentDao extends Dao {
 
 	public List<TestListStudent> filter(Student student) throws Exception {
 		//リストを初期化
-		List<TestListStudentDao> list = new ArrayList<>();
+		List<TestListStudent> list = new ArrayList<>();
 		//コネクションを確立
 		Connection connection = getConnection();
 		//プリペアステートメント
@@ -56,11 +57,11 @@ public class TestListStudentDao extends Dao {
 		try {
 			//プリペアーステートメントにSQL文をセット
 			statement = connection.prepareStatement(baseSql + condition + conditionIsAttend + order);
-			statement.setString(1, student);
+			statement.setString(1, student.getNo());
 			//プライベートステートメントを実行
 			rSet = statement.executeQuery();
 			//リストへの格納処理を実行
-			list = postFilter(rSet, testliststudent);
+			list = postFilter(rSet);
 		} catch (Exception e) {
 			throw e;
 		} finally {
