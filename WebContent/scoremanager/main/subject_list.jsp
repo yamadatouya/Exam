@@ -20,7 +20,7 @@
 			<h2 class="h3 mb-3 fw-norma bg-secondary bg-opacity-10 py-2 px-4">科目管理</h2>
 
 			<div class="my-2 text-end px-4">
-			<a href="SubjectsCreate.action">新規登録</a>
+			<a href="SubjectCreate.action">新規登録</a>
 			</div>
 		<form method="get">
 		<div class="mt-2 text-warning">${errors.get("f1")}</div>
@@ -43,8 +43,8 @@
 
 		<td class="text-center">
 
-		<td><a href="SubjectstUpdate.action?no=${subjects.no}">変更</a></td>
-		<td><a href="SubjectsDelete.action?no=${subjects.no}">削除</a></td>
+		<td><a href="SubjecttUpdate.action?no=${subjects.no}">変更</a></td>
+		<td><a href="SubjectDelete.action?no=${subjects.no}">削除</a></td>
 		</tr>
 		</c:forEach>
 		</table>
