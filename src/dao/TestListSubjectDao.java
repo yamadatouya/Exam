@@ -1,4 +1,4 @@
-package dao;
+	package dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,29 +8,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 import bean.School;
-import bean.Student;
 import bean.Subject;
+import bean.TestListSubject;
 
 public class TestListSubjectDao extends Dao {
 
-	private String baseSql = "select * from student where school_cd=?";
+	private String baseSql = "select * from test where ?,?,?,?";
 
 
 	private List<TestListSubject> postFilter(ResultSet rSet) throws Exception {
 
 		//リストの初期化
-		List<Student> list = new ArrayList<>();
+		List<TestListSubject> list = new ArrayList<>();
 		//リザルトセットを全権走査
 		try {
 			while (rSet.next()) {
 				//学生インスタンスを初期化
 				TestListSubject testlistsubject = new TestListSubject();
 				//学生インスタンスに検索結果をセット
-				TestListSubject.setEntYear(rSet.getInt("ent_year"));
-				TestListSubject.setStudentNo(rSet.getString("student_no"));
-				TestListSubject.setStudentName(rSet.getString("student_name"));
-				TestListSubject.setClassNum(rSet.getString("class_num"));
-				TestListSubject.setPoints(rSet.get)
+				testlistsubject.setEntYear(rSet.getInt("ent_year"));
+				testlistsubject.setStudentNo(rSet.getString("student_no"));
+				testlistsubject.setStudentName(rSet.getString("student_name"));
+				testlistsubject.setDassNum(rSet.getString("class_num"));
+				testlistsubject.setPoints(null);
 				//リストに追加
 				list.add(testlistsubject);
 			}
@@ -40,7 +40,7 @@ public class TestListSubjectDao extends Dao {
 		return list;
 	}
 
-	public List<TestListSubjectDao> filter(int entYear,String classNum,Subject subject,School school) throws Exception {
+	public List<TestListSubject> filter(int entYear,String classNum,Subject subject,School school) throws Exception {
 		//リストを初期化
 		List<TestListSubject> list = new ArrayList<>();
 		//コネクションを確立
@@ -59,14 +59,14 @@ public class TestListSubjectDao extends Dao {
 		try {
 			//プリペアーステートメントにSQL文をセット
 			statement = connection.prepareStatement(baseSql + condition + conditionIsAttend + order);
-			statement.setString(1, entYear);
-			statement.setInt(2, classNum);
-			statement.setString(3, subject);
-			statement.setString(4, school);
+			statement.setInt(1, entYear);
+			statement.setString(2, classNum);
+			statement.setString(3, subject.getCd());
+			statement.setString(4, school.getCd());
 			//プライベートステートメントを実行
 			rSet = statement.executeQuery();
 			//リストへの格納処理を実行
-			list = postFilter(rSet, restlistsubject);
+			list = postFilter(rSet);
 		} catch (Exception e) {
 			throw e;
 		} finally {
