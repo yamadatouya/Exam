@@ -11,6 +11,6 @@ public class SubjectCreateAction extends Action {
 	public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
 
 
-		req.getRequestDispatcher("subject_createjsp").forward(req,  res);
+		req.getRequestDispatcher("subject_create.jsp").forward(req,  res);
 	}
 }

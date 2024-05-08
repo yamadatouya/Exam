@@ -41,7 +41,7 @@
 		</c:if>
 		<div class="col-16">
 		<label class="form-label" for="subject-cd-text">科目コード</label>
-		<input class="form-control" type="text" placeholder="科目コードを入力してください" name="no" id="subject-cd-text" maxlength="10" required <c:if test="${no!=null}">value="${no}"</c:if>>
+		<input class="form-control" type="text" placeholder="科目コードを入力してください" name="cd" id="subject-cd-text" maxlength="10" required <c:if test="${no!=null}">value="${no}"</c:if>>
 		</div>
 		<div class="col-16 error-message" id="subject-cd-error"></div> <%-- エラーメッセージを表示する要素 --%>
 
