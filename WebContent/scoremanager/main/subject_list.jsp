@@ -1,4 +1,4 @@
-<%--科目画面一覧JSP--%>
+<%--科目一覧JSP--%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -16,45 +16,47 @@
 <c:param name="scripts"></c:param>
 
 	<c:param name="content">
+<section class="me-4">
+<h2 class="h3 mb-3 fw-norma bg-secondary bg-opacity-10 py-2 px-4">科目管理</h2>
+<div class="my-2 text-end px-4">
+<a href="subject_create.jsp">新規登録</a>
+</div>
+<form method="get">
 
-			<h2 class="h3 mb-3 fw-norma bg-secondary bg-opacity-10 py-2 px-4">科目管理</h2>
 
-			<div class="my-2 text-end px-4">
-			<a href="SubjectCreate.action">新規登録</a>
-			</div>
-		<form method="get">
-		<div class="mt-2 text-warning">${errors.get("f1")}</div>
 
-		</form>
-		<c:choose>
-		<c:when test="${subjects.size()!=0}">
+					<div class="mt-2 text-warning">${errors.get("f1")}</div>
 
-		<table class="table table-hover">
-		<tr>
-		<th>科目コード</th>
-		<th>科目名</th>
-		<th></th>
-		<th></th>
-		</tr>
-		<c:forEach var="subjects" items="${subjects}">
-		<tr>
-		<td>${subjects.code}</td>
-		<td>${subjects.name}</td>
+			</form>
+<c:choose>
+<c:when test="${subjects.size()!=0}">
 
-		<td class="text-center">
+					<table class="table table-hover">
+<tr>
+<th>科目コード</th>
+<th>科目名</th>
+<th></th>
+<th></th>
+</tr>
+<c:forEach var="subject" items="${subjects}">
+<tr>
+<td>${subject.cd}</td>
+<td>${subject.name}</td>
 
-		<td><a href="SubjecttUpdate.action?no=${subjects.no}">変更</a></td>
-		<td><a href="SubjectDelete.action?no=${subjects.no}">削除</a></td>
-		</tr>
-		</c:forEach>
-		</table>
-		</c:when>
-		<c:otherwise>
-			<div>学生情報が存在しませんでした</div>
-		</c:otherwise>
-		</c:choose>
+								<td class="text-center">
 
-	</c:param>
+								<td><a href="subject_update.jsp?no=${subject.cd}">変更</a></td>
+<td><a href="subject_delete.jsp?no=${subject.cd}">削除</a></td>
+</tr>
+</c:forEach>
+</table>
+</c:when>
+<c:otherwise>
+<div>学生情報が存在しませんでした</div>
+</c:otherwise>
+</c:choose>
+</section>
+</c:param>
 </c:import>
 
 </body>
