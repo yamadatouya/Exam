@@ -10,25 +10,26 @@ import dao.SubjectDao;
 import tool.Action;
 
 public class SubjectUpdateAction extends Action {
+    @Override
+    public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
+        HttpSession session = req.getSession(); // セッション
+        Teacher teacher = (Teacher) session.getAttribute("user");
 
-	@Override
-	public void execute(HttpServletRequest req, HttpServletResponse res)throws Exception {
+        String subjectCode = ""; // 受信した科目コード
+        SubjectDao subjectDao = new SubjectDao(); // 科目Dao
+        Subject thisSubject = null; // 科目情報受け取り用
 
-		HttpSession session = req.getSession();//セッション
+        // リクエストパラメータの取得
+        subjectCode = req.getParameter("no");
 
-		Teacher teacher = (Teacher)session.getAttribute("user");
+        // 科目情報の取得
+        thisSubject = subjectDao.get(subjectCode, teacher.getSchool());
 
-		String cd = req.getParameter("cd");
+        // リクエストパラメータに情報をセット
+        req.setAttribute("code", subjectCode);
+        req.setAttribute("name", thisSubject.getName());
 
-		SubjectDao p=new SubjectDao();
-
-		Subject a = p.get(cd, teacher.getSchool());
-
-		req.setAttribute("subject", a);
-
-
-	//JSPへフォワード 7
-		req.getRequestDispatcher("subject_update.jsp").forward(req, res);
-	}
-
+        // JSPへフォワード
+        req.getRequestDispatcher("subject_update.jsp").forward(req, res);
+    }
 }

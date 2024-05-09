@@ -9,20 +9,26 @@ import bean.Teacher;
 import dao.SubjectDao;
 import tool.Action;
 
-public class SubjectDeleteAction extends Action {
-
+public class SubjectDeleteAction extends Action{
 	@Override
 	public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
-		// TODO 自動生成されたメソッド・スタブ
-		HttpSession session = req.getSession();//セッション
+		HttpSession session = req.getSession(); // セッション
+		Teacher teacher =(Teacher)session.getAttribute("user");
 
-		Teacher teacher = (Teacher)session.getAttribute("user");
-		String cd = req.getParameter("cd");
-		SubjectDao p=new SubjectDao();
+		String subjectNo=""; //送付された科目番号の受け取り先
+		Subject thisSubject = new Subject();
+		SubjectDao subDao = new SubjectDao();
 
-		Subject a = p.get(cd,teacher.getSchool());
-		req.setAttribute("subject" , a);
+		// リクエストパラメータの取得
+		subjectNo=req.getParameter("no");
+
+		// 科目情報取得
+		thisSubject=subDao.get(subjectNo, teacher.getSchool());
+
+		// リクエストパラメータのセット
+		req.setAttribute("selected_subject_name", thisSubject.getName());
+		req.setAttribute("selected_subject_code", thisSubject.getCd());
+		// フォワード
 		req.getRequestDispatcher("subject_delete.jsp").forward(req, res);
 	}
-
 }
