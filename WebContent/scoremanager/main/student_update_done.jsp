@@ -7,15 +7,13 @@
 </c:param>
 	<c:param name="scripts"></c:param>
 	<c:param name="content">
-	<a>登録に成功しました</a>
+	<a>変更が完了しました</a>
 
 
 
 	<form action="menu.jsp" method="post">
                 <button type="submit" class="btn btn-secondary">戻る</button>
     </form>
-
-
 
 
 
