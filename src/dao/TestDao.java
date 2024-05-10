@@ -105,7 +105,7 @@ public class TestDao extends Dao {
 			statement.setString(2, classNum);
 			statement.setString(3, subject.getCd());
 			statement.setInt(4, num);
-			//多分一個足りない
+			statement.setString(5, school.getCd());
 
 			rSet = statement.executeQuery();
 			list = postFilter(rSet, school);
@@ -126,29 +126,34 @@ public class TestDao extends Dao {
 	public boolean save(Test test) throws Exception {
 		Connection connection = getConnection();
 		PreparedStatement statement = null;
-		StudentDao studentdao = new StudentDao();
 		//実行件数
 		int count = 0;
 		try {
 			//DBから科目を取得
-			Subject old = get(studentdao.get());
+			Test old = get(test.getStudent(),test.getSubject(),test.getSchool(),test.getNo());
 			if (old == null) {
 				//存在しなかった場合
 				//プリペアードステートメントにINSERT文をセット
 				statement = connection.prepareStatement(
-						"insert into test values(?, ?, ?)");
+						"insert into test(STUDENT_NO,SUBJECT_CD,SCHOOL_CD,NO,POINT,CLASS_NUM) values(?,?,?,?,?,?)");
 				//プリペアーどステートメントに値をバインド
-				statement.setString(1, );
-				statement.setString(2, );
-				statement.setString(3, );
+				statement.setString(1, test.getStudent().getNo());
+				statement.setString(2, test.getSubject().getCd());
+				statement.setString(3, test.getSchool().getCd());
+				statement.setInt(4, test.getNo());
+				statement.setInt(5, test.getPoint());
+				statement.setString(6, test.getClassNum());
 			} else{
 				//存在した場合
 				//プリペアードステートメントにINSERT文をセット
 				statement = connection.prepareStatement(
-						"update test set cd=? where name=?");
+						"update test set point=? where school_cd=?,subject_cd=?,student_no=?,no=?");
 				//プリペアードステートメントに値をバインド
-				statement.setString(1,);
-				statement.setString(2,);
+				statement.setInt(1, test.getPoint());
+				statement.setString(2, test.getSchool().getCd());
+				statement.setString(3, test.getSubject().getCd());
+				statement.setString(4,test.getStudent().getNo());
+				statement.setInt(5, test.getNo());
 			}
 
 			//プリペアードステートメントを実行
@@ -183,11 +188,12 @@ public class TestDao extends Dao {
 	}
 
 	public boolean save(Test test,Connection connection) throws Exception {
+		return false;
 	}
 
-	public boolean delete(List<Test> list) throws Exception {
-	}
+	//public boolean delete(List<Test> list) throws Exception {
+	//}
 
-	public boolean delete(Test test,Connection connection) throws Exception {
-	}
+	//public boolean delete(Test test,Connection connection) throws Exception {
+	//}
 }
