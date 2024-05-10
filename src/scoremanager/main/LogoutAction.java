@@ -4,9 +4,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-public class LogoutAction {
+import tool.Action;
+
+public class LogoutAction extends Action{
 
 	public void execute(HttpServletRequest req, HttpServletResponse res)throws Exception {
+		String url = "";
+		url = "logout.jsp";
 		HttpSession session = req.getSession(); // セッション
 
 		//リクエストパラメータ―の取得 2-
@@ -14,16 +18,14 @@ public class LogoutAction {
 		//DBからデータ取得 3
 		//なし
 		//ビジネスロジック 4
-
-		if(session.getAttribute("user")!=null){
-			session.invalidate();
-		}
+		session.removeAttribute("user");
 		//DBへデータ保存 5
 		//なし
 		//レスポンス値をセット 6
 		//なし
 		//JSPへフォワード 7
-		req.getRequestDispatcher("logout.jsp").forward(req, res);
+		url = "logout.jsp";
+		req.getRequestDispatcher(url).forward(req, res);
 	}
 
 }
