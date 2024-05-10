@@ -42,9 +42,9 @@ public class StudentUpdateAction extends Action {
 
 		req.setAttribute("name", a.getName());
 
-		req.setAttribute("num", list);
+		req.setAttribute("class_num", list);
 
-		req.setAttribute("class_num", a.getClassNum());
+		//req.setAttribute("class_num1", a.getClassNum());
 
 		//JSPへフォワード 7
 

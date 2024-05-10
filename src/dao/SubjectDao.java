@@ -12,8 +12,6 @@ import bean.Subject;
 
 public class SubjectDao extends Dao {
 	//SQL      SCHOOL_CD CD NAME
-
-
 	public Subject get(String cd, School school) throws Exception {
 		//変数宣言タイム
 		Subject subject = new Subject();
