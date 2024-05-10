@@ -8,7 +8,7 @@ import tool.Action;
 public class LoginAction extends Action {
 
 	@Override
-	public void execute(HttpServletRequest req, HttpServletResponse res) 
+	public void execute(HttpServletRequest req, HttpServletResponse res)
 			throws Exception {
 		//ローカル変数の宣言 1
 		//なし
