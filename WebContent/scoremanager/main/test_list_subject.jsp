@@ -9,7 +9,7 @@
         <section class="me-4">
             <h2 class="h3 mb-3 fw-norma bg-secondary bg-opacity-10 py-2 px-4">成績一覧(科目)</h2>
             <div class="row">
-            
+
                 <div class="col">
                     <h3 class="h5 mb-3 fw-normal bg-secondary bg-opacity-10 py-2 px-4">科目情報</h3>
                     <form method="get">
