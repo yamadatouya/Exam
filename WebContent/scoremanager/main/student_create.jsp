@@ -41,7 +41,7 @@
 
                     <label for="no">学年番号：</label>
 
-                    <input type="text" id="no" name="no" class="form-control">
+                    <input type="text" id="no" name="no" class="form-control" placeholder="学生番号を入力してください">
 
                 </div>
 
@@ -49,7 +49,7 @@
 
                     <label for="student.name">氏名：</label>
 
-                    <input type="text" id="name" name="name" class="form-control">
+                    <input type="text" id="name" name="name" class="form-control" placeholder="氏名を入力してください">
 
                 </div>
 
@@ -80,6 +80,7 @@
                 <button type="submit" class="btn btn-secondary">終了</button>
 
             </form>
+
 
         </div>
 
