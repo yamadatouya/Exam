@@ -55,7 +55,7 @@ public class TestListSubjectExecuteAction extends Action {
         req.setAttribute("message", "成績データが取得されました。");
 
         // test_list_student.jspにフォワード
-        req.getRequestDispatcher("/test_list_student.jsp").forward(req, res);
+        req.getRequestDispatcher("test_list_student.jsp").forward(req, res);
     }
 
     // 成績データを取得するロジック
