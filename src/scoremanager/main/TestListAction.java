@@ -1,5 +1,7 @@
 package scoremanager.main;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,6 +23,23 @@ public class TestListAction extends Action {
 
         // セッションからユーザーデータを取得
         User user = (User)session.getAttribute("user");
+
+		LocalDate todaysDate = LocalDate.now(); //LocalDateインスタンス取得
+		int year =todaysDate.getYear(); // 現在の年を取得
+		List<Integer> numSet= new ArrayList<>();
+		for (int i = 1; i < 101; i++){
+			numSet.add(i);
+		}
+		// リストを初期化
+		List<Integer> entYearSet=new ArrayList<>();
+		// 10年前から1年後までの年をリストに追加
+		for (int i = year-10;i<year+1;i++){
+			entYearSet.add(i);
+		}
+
+		// データをリクエストにセット
+		req.setAttribute("ent_year_set", entYearSet);
+		req.setAttribute("num_set", numSet);
 
         if (user != null) {
             // ユーザーが所属している学校を取得
