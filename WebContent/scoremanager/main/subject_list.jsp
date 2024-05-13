@@ -25,9 +25,9 @@
 
 
 
-					<div class="mt-2 text-warning">${errors.get("f1")}</div>
+<div class="mt-2 text-warning">${errors.get("f1")}</div>
 
-			</form>
+</form>
 <c:choose>
 <c:when test="${subjects.size()!=0}">
 
@@ -43,9 +43,9 @@
 <td>${subject.cd}</td>
 <td>${subject.name}</td>
 
-								<td class="text-center">
+<td class="text-center">
 
-								<td><a href="subject_update.jsp?no=${subject.cd}">変更</a></td>
+<td><a href="subject_update.jsp?no=${subject.cd}">変更</a></td>
 <td><a href="subject_delete.jsp?no=${subject.cd}">削除</a></td>
 </tr>
 </c:forEach>

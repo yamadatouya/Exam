@@ -83,8 +83,8 @@
 										</c:otherwise>
 									</c:choose>
 								</td>
-								</td><a href="StudentUpdate.action?no=${student.no}">・変更する</a></td>
-								</td><a href="StudentDelete.action?no=${student.no}">・削除する</a></td>
+								<td><a href="StudentUpdate.action?no=${student.no}">変更</a></td>
+
 							</tr>
 						</c:forEach>
 					</table>

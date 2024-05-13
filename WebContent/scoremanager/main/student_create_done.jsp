@@ -15,23 +15,6 @@
                 <button type="submit" class="btn btn-secondary">戻る</button>
     </form>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	</c:param>
 </c:import>
+
