@@ -123,41 +123,45 @@ public class TestDao extends Dao {
 		return list;
 	}
 
-	public boolean save(Test test) throws Exception {
+	public boolean save(List<Test> test) throws Exception {
 		Connection connection = getConnection();
 		PreparedStatement statement = null;
 		//実行件数
 		int count = 0;
 		try {
-			//DBから科目を取得
-			Test old = get(test.getStudent(),test.getSubject(),test.getSchool(),test.getNo());
-			if (old == null) {
-				//存在しなかった場合
-				//プリペアードステートメントにINSERT文をセット
-				statement = connection.prepareStatement(
-						"insert into test(STUDENT_NO,SUBJECT_CD,SCHOOL_CD,NO,POINT,CLASS_NUM) values(?,?,?,?,?,?)");
-				//プリペアーどステートメントに値をバインド
-				statement.setString(1, test.getStudent().getNo());
-				statement.setString(2, test.getSubject().getCd());
-				statement.setString(3, test.getSchool().getCd());
-				statement.setInt(4, test.getNo());
-				statement.setInt(5, test.getPoint());
-				statement.setString(6, test.getClassNum());
-			} else{
-				//存在した場合
-				//プリペアードステートメントにINSERT文をセット
-				statement = connection.prepareStatement(
-						"update test set point=? where school_cd=?,subject_cd=?,student_no=?,no=?");
-				//プリペアードステートメントに値をバインド
-				statement.setInt(1, test.getPoint());
-				statement.setString(2, test.getSchool().getCd());
-				statement.setString(3, test.getSubject().getCd());
-				statement.setString(4,test.getStudent().getNo());
-				statement.setInt(5, test.getNo());
-			}
+//			//DBから科目を取得
+//			Test old = get(test.getStudent(),test.getSubject(),test.getSchool(),test.getNo());
+//			if (old == null) {
+//				//存在しなかった場合
+//				//プリペアードステートメントにINSERT文をセット
+//				statement = connection.prepareStatement(
+//						"insert into test(STUDENT_NO,SUBJECT_CD,SCHOOL_CD,NO,POINT,CLASS_NUM) values(?,?,?,?,?,?)");
+//				//プリペアーどステートメントに値をバインド
+//				statement.setString(1, test.getStudent().getNo());
+//				statement.setString(2, test.getSubject().getCd());
+//				statement.setString(3, test.getSchool().getCd());
+//				statement.setInt(4, test.getNo());
+//				statement.setInt(5, test.getPoint());
+//				statement.setString(6, test.getClassNum());
+//			} else{
+//				//存在した場合
+//				//プリペアードステートメントにINSERT文をセット
+//				statement = connection.prepareStatement(
+//						"update test set point=? where school_cd=?,subject_cd=?,student_no=?,no=?");
+//				//プリペアードステートメントに値をバインド
+//				statement.setInt(1, test.getPoint());
+//				statement.setString(2, test.getSchool().getCd());
+//				statement.setString(3, test.getSubject().getCd());
+//				statement.setString(4,test.getStudent().getNo());
+//				statement.setInt(5, test.getNo());
+//			}
+//
+//			//プリペアードステートメントを実行
+//			count = statement.executeUpdate();
 
-			//プリペアードステートメントを実行
-			count = statement.executeUpdate();
+			for(Test test1:test){
+				save(test1,connection);
+			}
 
 		} catch (Exception e) {
 			throw e;
@@ -188,6 +192,37 @@ public class TestDao extends Dao {
 	}
 
 	public boolean save(Test test,Connection connection) throws Exception {
+		int count = 0;
+		//DBから科目を取得
+		Test old = get(test.getStudent(),test.getSubject(),test.getSchool(),test.getNo());
+		PreparedStatement statement = null;
+		if (old == null) {
+			//存在しなかった場合
+			//プリペアードステートメントにINSERT文をセット
+			statement = connection.prepareStatement(
+					"insert into test(STUDENT_NO,SUBJECT_CD,SCHOOL_CD,NO,POINT,CLASS_NUM) values(?,?,?,?,?,?)");
+			//プリペアーどステートメントに値をバインド
+			statement.setString(1, test.getStudent().getNo());
+			statement.setString(2, test.getSubject().getCd());
+			statement.setString(3, test.getSchool().getCd());
+			statement.setInt(4, test.getNo());
+			statement.setInt(5, test.getPoint());
+			statement.setString(6, test.getClassNum());
+		} else{
+			//存在した場合
+			//プリペアードステートメントにINSERT文をセット
+			statement = connection.prepareStatement(
+					"update test set point=? where school_cd=?,subject_cd=?,student_no=?,no=?");
+			//プリペアードステートメントに値をバインド
+			statement.setInt(1, test.getPoint());
+			statement.setString(2, test.getSchool().getCd());
+			statement.setString(3, test.getSubject().getCd());
+			statement.setString(4,test.getStudent().getNo());
+			statement.setInt(5, test.getNo());
+		}
+
+		//プリペアードステートメントを実行
+		count = statement.executeUpdate();
 		return false;
 	}
 
