@@ -7,6 +7,11 @@
 
     <c:param name="title" value="得点管理システム" />
     <c:param name="scripts">
+     <style>
+        .error {
+           			 color: orange;
+        		}
+    </style>
     </c:param>
     <c:param  name="content">
         <div class="container">
@@ -22,11 +27,17 @@
                             <option value="${year}" <c:if test="${year == f1}">selected</c:if>>${year}</option>
                         </c:forEach>
                     </select>
+                    <c:if test="${not empty errors.ent_year}">
+              	    	<span class="error">${errors.ent_year}</span>
+            		</c:if>
                 </div>
 
                 <div class="form-group">
                     <label class="form-label" for="no">学年番号</label>
-                    <input type="text" id="no" name="no" class="form-control" placeholder="学生番号を入力してください" name="no" id="no" maxlength="10" required <c:if test="${no!=null}">value="${no}"</c:if>>
+                    <input type="text" id="no" name="no" class="form-control" placeholder="学生番号を入力してください" name="no" id="no" maxlength="10" required/>
+                    <c:if test="${not empty errors.no}">
+                    	 <span class="error">${errors.no}</span>
+                    </c:if>
                 </div>
 
 				<%-- エラーメッセージを表示する要素 --%>
