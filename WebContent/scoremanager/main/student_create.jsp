@@ -11,6 +11,7 @@
     <c:param  name="content">
         <div class="container">
 
+
             <h2>学生情報登録</h2>
             <form action="StudentCreateExecute.action" method="post" class="form" onsubmit="return validateForm()">
                 <div class="form-group">
@@ -23,19 +24,10 @@
                     </select>
                 </div>
 
-				<%-- エラーメッセージを表示する要素 --%>
-                <c:if test="${errors.get('f1')!=null}"><div class="col-16"><font color="FFD500">${errors.get("f1")}</font></div></c:if>
-
                 <div class="form-group">
                     <label class="form-label" for="no">学年番号</label>
                     <input type="text" id="no" name="no" class="form-control" placeholder="学生番号を入力してください" name="no" id="no" maxlength="10" required <c:if test="${no!=null}">value="${no}"</c:if>>
                 </div>
-
-				<%-- 重複エラーメッセージの表示 --%>
-				<c:if test="${errors.get('f1')!=null}">
-					<div class="form-group"><font color="FFD500">${errors.get("f1")}</font></div>
-				</c:if>
-
 
 				<%-- エラーメッセージを表示する要素 --%>
 				<c:if test="${errors.get('f2')!=null}"><div class="col-16"><font color="FFD500">${errors.get("f2")}</font></div></c:if>
@@ -57,6 +49,7 @@
 
                 <button type="submit" class="btn btn-primary">登録して終了</button>
             </form>
+
             <form action="StudentList.action" method="post">
                 <button type="submit" class="btn btn-secondary">戻る</button>
             </form>
