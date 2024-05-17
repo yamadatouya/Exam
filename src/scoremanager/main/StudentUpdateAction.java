@@ -18,8 +18,6 @@ public class StudentUpdateAction extends Action {
 	public void execute(HttpServletRequest req, HttpServletResponse res)throws Exception {
 
 
-
-
 		HttpSession session = req.getSession();//セッション
 
 		Teacher teacher = (Teacher)session.getAttribute("user");
@@ -43,6 +41,8 @@ public class StudentUpdateAction extends Action {
 		req.setAttribute("name", a.getName());
 
 		req.setAttribute("class_num", list);
+
+		req.setAttribute("is_Attend", a.isAttend());
 
 		//req.setAttribute("class_num1", a.getClassNum());
 
