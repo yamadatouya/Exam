@@ -23,7 +23,7 @@
                     </select>
                 </div>
 
-				<%-- エラー表示 --%>
+				<%-- エラーメッセージを表示する要素 --%>
                 <c:if test="${errors.get('f1')!=null}"><div class="col-16"><font color="FFD500">${errors.get("f1")}</font></div></c:if>
 
                 <div class="form-group">
@@ -31,7 +31,13 @@
                     <input type="text" id="no" name="no" class="form-control" placeholder="学生番号を入力してください" name="no" id="no" maxlength="10" required <c:if test="${no!=null}">value="${no}"</c:if>>
                 </div>
 
-				<%-- エラー表示 --%>
+				<%-- 重複エラーメッセージの表示 --%>
+				<c:if test="${errors.get('f1')!=null}">
+					<div class="form-group"><font color="FFD500">${errors.get("f1")}</font></div>
+				</c:if>
+
+
+				<%-- エラーメッセージを表示する要素 --%>
 				<c:if test="${errors.get('f2')!=null}"><div class="col-16"><font color="FFD500">${errors.get("f2")}</font></div></c:if>
 
                 <div class="form-group">
