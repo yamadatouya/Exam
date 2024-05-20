@@ -59,7 +59,6 @@ public class TestListAction extends Action {
         HttpSession session = req.getSession();
         Teacher teacher = (Teacher) session.getAttribute("user");
 
-		Subject subject = new Subject();
         SubjectDao subjectDao = new SubjectDao(); // 科目Dao
 
         // 科目データ取得
@@ -73,6 +72,7 @@ public class TestListAction extends Action {
         Teacher teacher = (Teacher) session.getAttribute("user");
 
         ClassNumDao cNumDao = new ClassNumDao(); // クラス番号Dao
+
 		// クラスデータ取得
         List<String> classNumList=cNumDao.filter(teacher.getSchool());
 
