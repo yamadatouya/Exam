@@ -42,11 +42,12 @@
 									<option value="0">--------</option>
 									<c:forEach var="str" items="${subject_set }">
 										<%-- 現在のstrと選択されていたf3が一致していた場合selectedを追記 --%>
-										<option value="${str}" <c:if test="${str==f3}">selected</c:if>>${str}</option>
+										<option value="${str.cd}" <c:if test="${str.cd==f3}">selected</c:if>>${str.name}</option>
 									</c:forEach>
 								</select>
 							</div>
                             <div class="col-2 text-center">
+                            	<input type="hidden" name="f" value="sj">
                                 <button class="btn btn-secondary" id="filter-button-subject">検索</button>
                             </div>
                         </div>
@@ -63,6 +64,7 @@
                                 <input type="text" class="form-control" id="student-number" name="studentNumber" placeholder="学生番号を入力してください">
                             </div>
                             <div class="col-2 text-center">
+                            	<input type="hidden" name="f" value="st">
                                 <button class="btn btn-secondary" id="filter-button-student">検索</button>
                             </div>
                         </div>
