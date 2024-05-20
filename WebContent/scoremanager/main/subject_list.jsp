@@ -19,7 +19,7 @@
 <section class="me-4">
 <h2 class="h3 mb-3 fw-norma bg-secondary bg-opacity-10 py-2 px-4">科目管理</h2>
 <div class="my-2 text-end px-4">
-<a href="subject_create.jsp">新規登録</a>
+<a href="SubjectCreate.action">新規登録</a>
 </div>
 <form method="get">
 
@@ -45,8 +45,8 @@
 
 <td class="text-center">
 
-<td><a href="subject_update.jsp?no=${subject.cd}">変更</a></td>
-<td><a href="subject_delete.jsp?no=${subject.cd}">削除</a></td>
+<td><a href="SubjectUpdate.action?no=${subject.cd}">変更</a></td>
+<td><a href="SubjectDelete.action?no=${subject.cd}">削除</a></td>
 </tr>
 </c:forEach>
 </table>

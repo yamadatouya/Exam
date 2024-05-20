@@ -31,7 +31,7 @@
                 </div>
                 <div class="mx-auto py-2">
                     <label for="is_attend">在学中</label>
-                    <input type="checkbox" id="is_attend" name="is_attend" <c:if test="${is_attend}">checked</c:if> />
+                    <input type="checkbox" id="is_attend" name="is_Attend" <c:if test="${is_Attend}">checked</c:if> />
                 </div>
                 <div class="mx-auto py-2">
                     <input class="btn btn-primary" type="submit" name="login" value="変更" />
