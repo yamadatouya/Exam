@@ -8,8 +8,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import bean.Student;
 import bean.Subject;
 import bean.Teacher;
+import bean.Test;
 import dao.ClassNumDao;
 import dao.SubjectDao;
 import tool.Action;
@@ -19,6 +21,8 @@ public class TestListAction extends Action {
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
     	String action = req.getParameter("f");
+    	HttpSession session = req.getSession();
+        Teacher teacher = (Teacher) session.getAttribute("user");
 
 		LocalDate todaysDate = LocalDate.now(); //LocalDateインスタンス取得
 		int year =todaysDate.getYear(); // 現在の年を取得
@@ -37,9 +41,13 @@ public class TestListAction extends Action {
 			entYearSet.add(i);
 		}
 
+		SubjectDao subjectDao = new SubjectDao(); // 科目Dao
+		List<Subject> subjectList=subjectDao.filter(teacher.getSchool());
+
 		// データをリクエストにセット
 		req.setAttribute("ent_year_set", entYearSet);
 		req.setAttribute("num_set", numSet);
+		req.setAttribute("subject_name", subjectList);
 
         if (action != null) {
             switch (action) {
@@ -59,10 +67,17 @@ public class TestListAction extends Action {
         HttpSession session = req.getSession();
         Teacher teacher = (Teacher) session.getAttribute("user");
 
+		String subjectName ="";
+		Student students = null;
+		List<Test> test = null;
+		Subject subject = new Subject();
         SubjectDao subjectDao = new SubjectDao(); // 科目Dao
+		List<Subject> subjectList=subjectDao.filter(teacher.getSchool());
 
-        // 科目データ取得
-        List<Subject> subjectList=subjectDao.filter(teacher.getSchool());
+		subjectName=req.getParameter("sj");
+
+		students = ((Test) test).getStudent();
+		subject=subjectDao.get(subjectName, teacher.getSchool());
 
 		req.setAttribute("subject_name", subjectList);
     }
