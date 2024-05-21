@@ -1,74 +1,106 @@
 package scoremanager.main;
-
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import bean.School;
 import bean.Student;
+import bean.Subject;
 import bean.Teacher;
 import bean.Test;
+import dao.ClassNumDao;
+import dao.SubjectDao;
+import dao.TestDao;
 import tool.Action;
 
 public class TestListSubjectExecuteAction extends Action {
 
-    @Override
-    public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
-        //変数宣言
-        HttpSession session = req.getSession(); // セッション
-        Teacher teacher = (Teacher) session.getAttribute("user");
-        School school = teacher.getSchool();
-        Student student = new Student();
-        int ent_year = Integer.parseInt(req.getParameter("f1"));
-        String no = req.getParameter("no");
-        String name = req.getParameter("name");
-        String class_num = req.getParameter("f2");
+	@Override
+	public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
+		HttpSession session = req.getSession(); // セッション
+		Teacher teacher =(Teacher)session.getAttribute("user");
+		LocalDate todaysDate = LocalDate.now(); //LocalDateインスタンス取得
+		int year =todaysDate.getYear(); // 現在の年を取得
+		ClassNumDao cNumDao = new ClassNumDao(); // クラス番号Dao
+		SubjectDao subjectDao = new SubjectDao(); //科目Dao
+		List<String> list=cNumDao.filter(teacher.getSchool());
+		List<Subject> subjectList=subjectDao.filter(teacher.getSchool());
 
-        student.setNo(no);
-        student.setName(name);
-        student.setEntYear(ent_year);
-        student.setClassNum(class_num);
-        student.setAttend(true);
-        student.setSchool(school);
+		// リストを初期化
+		List<Integer> entYearSet=new ArrayList<>();
 
-        // 入力内容のチェック
-        if (ent_year == 0 || class_num == null || no == null || name == null || class_num.isEmpty() || no.isEmpty() || name.isEmpty()) {
-            // 入力が不足している場合はエラーメッセージを設定
-            req.setAttribute("message", "入学年度、クラス、科目を全て選択してください。");
-            // フォームの入力値を保持してtest_list_student.jspにフォワード
-            req.setAttribute("ent_year", ent_year);
-            req.setAttribute("class_num", class_num);
-            req.setAttribute("no", no);
-            req.setAttribute("name", name);
-            req.getRequestDispatcher("/test_list_student.jsp").forward(req, res);
-            return;
-        }
+		// 10年前から1年後までの年をリストに追加
+		for (int i = year-10;i<year+1;i++){
+			entYearSet.add(i);
+		}
 
-        // 入学年度、クラス、科目から成績データを取得する処理を追加
-        List<Test> testList = getTestScores(String.valueOf(ent_year), class_num, req.getParameter("f3"));
+		// データをリクエストにセット
+		req.setAttribute("class_num_set", list);
+		req.setAttribute("ent_year_set", entYearSet);
+		req.setAttribute("subject_set", subjectList);
 
-        // 成績データをリクエスト属性にセット
-        req.setAttribute("testList", testList);
-        // メッセージを設定
-        req.setAttribute("message", "成績データが取得されました。");
+//		既に何らかが入力されている場合にそれに応じた処理を行う
+		try{
+				TestRequestData(req, res);
+		} catch (NullPointerException e ){
+			req.getRequestDispatcher("test_list_subject.jsp").forward(req, res);
+		} catch (NumberFormatException nume){
+			req.getRequestDispatcher("test_list_subject.jsp").forward(req, res);
+		}
+	}
 
-        // test_list_student.jspにフォワード
-        req.getRequestDispatcher("test_list_student.jsp").forward(req, res);
-    }
+	private void TestRequestData(HttpServletRequest req, HttpServletResponse res) throws Exception {
+		HttpSession session = req.getSession(); // セッション
+		Teacher teacher =(Teacher)session.getAttribute("user");
+		String entYearStr ="";
+		String classNum ="";
+		String subjectName ="";
+		int entYear=0;
+		int num=0;
+		boolean deployment = false;
+		List<Test> test = null;
+		Student students = null;
+		Subject subject = new Subject();
+		TestDao testDao = new TestDao();
+		SubjectDao subjectDao = new SubjectDao();
+		Map<String,String> errors = new HashMap<>(); // エラーメッセージ
 
-    // 成績データを取得するロジック
-    private List<Test> getTestScores(String f1, String f2, String f3) {
-        // ここで入学年度、クラス、科目から成績データを取得する処理を実装する
-        // 例えば、データベースから成績データを取得するなど
-        // ダミーデータを返す場合は適宜修正すること
-        return someDatabaseOperationToGetTestScores(f1, f2, f3);
-    }
+//		入力値の確認
 
+		// リクエストパラメータの取得
+		entYearStr=req.getParameter("f1");
+		classNum=req.getParameter("f2");
+		subjectName=req.getParameter("f3");
 
-    private List<Test> someDatabaseOperationToGetTestScores(String f1, String f2, String f3) {
-        // データベースから成績データを取得するロジックを実装する
-        return null;
-    }
+//		入力値の型変換
+
+		entYear=Integer.parseInt(entYearStr);
+		subject=subjectDao.get(subjectName, teacher.getSchool());
+		if (entYearStr != null && !classNum.equals("0") && subject != null){
+
+		// 必要なデータを取得
+			test = testDao.filter(entYear, classNum, subject, num, teacher.getSchool());
+			students = ((Test) test).getStudent();
+
+		// 値セット
+			req.setAttribute("test_result", test);
+			req.setAttribute("subject_name", subject);
+			req.setAttribute("test_no", num);
+			req.setAttribute("students", students);
+			deployment = true;
+		}
+
+		else {
+//		入学年度、クラス、科目のいずれかが未入力の場合[入学年度とクラスと科目と回数を選択してください]と表示
+			errors.put("all", "入学年度とクラスと科目を選択してください");
+			req.setAttribute("errors", errors);
+		}
+		req.setAttribute("dep", deployment);
+		req.getRequestDispatcher("test_list_subject.jsp").forward(req, res);
+	}
 }
