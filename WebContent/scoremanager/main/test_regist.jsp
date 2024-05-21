@@ -12,7 +12,7 @@ pageEncoding="UTF-8"%>
 
 	<c:param name="content">
 <section class="me-4">
-<h2 class="h3 mb-3 fw-norma bg-secondary bg-opacity-10 py-2 px-4">成績登録</h2>
+<h2 class="h3 mb-3 fw-norma bg-secondary bg-opacity-10 py-2 px-4">成績管理</h2>
 <div class="my-2 text-end px-4">
 </div>
 <!-- 4項目完全一致型の検索 =＞ null無し-->
