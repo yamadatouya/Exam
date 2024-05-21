@@ -28,12 +28,12 @@
 <div class="row mx-3 mb-3 py-2 align-items-center rounded" id="filter">
 <div class="col-16">
 <label class="form-label" for="subject-code-text">科目コード</label>
-<input class="form-control-plaintext ps-3" type="text"  name="code" id="subject-code-text" readonly value="${code}">
+<input class="form-control-plaintext ps-3" type="text"  name="code"  id="subject-code-text" readonly value="${code}">
 </div>
 
 					<div class="col-16">
 <label class="form-label" for="subject-name-text">科目名</label>
-<input class="form-control" type="text" placeholder="科目名を入力してください" name="name" id="subject-name-text" maxlength="30" required value="${name}">
+<input class="form-control" type="text" placeholder="科目名を入力してください" name="name" id="subject-name-text" maxlength="20" required value="${name}">
 </div>
 
 
