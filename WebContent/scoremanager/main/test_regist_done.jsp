@@ -18,7 +18,7 @@ pageEncoding="UTF-8"%>
 </div>
 </div>
 <div class="me-3">
-<a href="SubjectManagement.action">戻る</a>
+<a href="TestRegist.action" class="me-5">戻る</a>
 <a href="TestList.action">成績参照</a>
 </div>
 </section>
