@@ -61,7 +61,7 @@ public class StudentCreateExecuteAction extends Action {
 
         if (saved) {
             // 変更に成功した場合、成功ページにフォワード
-            req.getRequestDispatcher("student_update_done.jsp").forward(req, res);
+            req.getRequestDispatcher("student_create_done.jsp").forward(req, res);
         } else {
             // 保存に失敗した場合、学生リストページにフォワード
             req.getRequestDispatcher("StudentList.action").forward(req, res);
