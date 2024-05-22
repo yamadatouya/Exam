@@ -1,5 +1,4 @@
 <%-- 成績管理一覧JSP --%>
-<%--成績管理一覧JSP--%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -10,7 +9,7 @@ pageEncoding="UTF-8"%>
 </c:param>
 <c:param name="scripts"></c:param>
 
-	<c:param name="content">
+<c:param name="content">
 <section class="me-4">
 <h2 class="h3 mb-3 fw-norma bg-secondary bg-opacity-10 py-2 px-4">成績管理</h2>
 <div class="my-2 text-end px-4">
@@ -60,15 +59,13 @@ pageEncoding="UTF-8"%>
 </c:forEach>
 </select>
 </div>
-
-					<div class="col-2 text-center">
+<div class="col-2 text-center">
 <button class="btn btn-secondary" id="filter-button">検索</button>
 </div>
-
-					<div class="mt-2 text-warning">${errors.get("all")}</div>
-
-				</div>
+<div class="mt-2 text-warning">${errors.get("all")}</div>
+</div>
 </form>
+
 <!-- 検索結果 -->
 <c:choose>
 <c:when test="${dep == true}">
@@ -97,7 +94,7 @@ pageEncoding="UTF-8"%>
 </c:forEach>
 </table>
 <div class="col-2 text-center">
-<input type="button" class="btn btn-secondary" value="保存して終了" />
+<input type="button" class="btn btn-secondary" value="登録して終了" />
 </div>
 </c:when>
 </c:choose>

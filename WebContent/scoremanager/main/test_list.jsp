@@ -71,6 +71,7 @@
                             <div class="mt-2 text-warning">${errors.get("f1")}</div>
                         </div>
                     </form>
+
                 </div>
                 <p><font color="00ffff">科目情報を選択または学生情報を入力して検索ボタンをクリックしてください</font></p>
             </div>
@@ -85,8 +86,8 @@
 			<th>氏名</th>
 			<th>1回</th>
 			<th>2回</th>
+			</tr>
 
-									</tr>
 			<c:forEach var="student" items="${students}">
 			<tr>
 			<td>${entYear}</td>
@@ -95,10 +96,7 @@
 			<td>${studentName}</td>
 			<td>${points}</td>
 			<td>${points}</td>
-
-
-
-										</tr>
+			</tr>
 			</c:forEach>
 			</table>
 			</c:when>

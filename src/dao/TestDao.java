@@ -15,7 +15,7 @@ import bean.Test;
 public class TestDao extends Dao {
 
 	//STUDENT_NO  	SUBJECT_CD  	SCHOOL_CD  	NO  	POINT  	CLASS_NUM
-	private String baseSql = "select * from test where";
+	private String baseSql = "select * from test where ";
 
 	public Test get(Student student,Subject subject,School school,int no) throws Exception {
 		//変数宣言タイム
