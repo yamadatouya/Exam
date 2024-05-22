@@ -164,8 +164,11 @@ public class StudentDao extends Dao {
 			statement = connection.prepareStatement(baseSql + condition + conditionIsAttend + order);
 			//プリペアーステートメントに学校コードをバインド
 			statement.setString(1, school.getCd());
+			statement.setInt(2, entYear);
 			//プライベートステートメントを実行
 			rSet = statement.executeQuery();
+
+
 			//リストへの格納処理を実行
 			list = postFilter(rSet, school);
 		} catch (Exception e) {
