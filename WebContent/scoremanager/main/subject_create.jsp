@@ -34,7 +34,7 @@
 				<form action="SubjectCreateExecute.action" method="get" onsubmit="return validateSubjectCode()">
 				<div class="row mx-3 mb-3 py-2 align-items-center rounded" id="filter">
 
-				                    <c:if test="${errors.get('f1')!=null}">
+                <c:if test="${errors.get('f1')!=null}">
 				<div class="col-16"><font color="FFD500">${errors.get("f1")}</font></div>
 				</c:if>
 				<div class="col-16">
@@ -49,7 +49,7 @@
 				</c:if>
 				<div class="col-16">
 				<label class="form-label" for="subject-name-text">科目名</label>
-				<input class="form-control" type="text" placeholder="科目名を入力してください" name="subject_name" id="subject-name-text" maxlength="30" required <c:if test="${name!=null}">value="${name}"</c:if>>
+				<input id="name"  class="form-control" type="text" placeholder="科目名を入力してください" name="subject_name" id="subject-name-text" maxlength="30" required <c:if test="${name!=null}">value="${name}"</c:if>>
 				</div>
 
 				                    <div class="col-2 text-center col-1 mt-3">
